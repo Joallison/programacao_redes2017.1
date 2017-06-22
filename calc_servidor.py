@@ -1,4 +1,6 @@
 import socket
+import math
+
 serverHost = 'localhost'
 serverPort = 12000
 
@@ -9,6 +11,9 @@ print("Servidor pronto para receber: ")
 
 def soma(a, b):
 	return a + b
+def raiz(a):
+	r = math.sqrt(a)
+	return r
 
 while True:
 	escolha, clientAddress = serverSocket.recvfrom(2048)
@@ -26,7 +31,11 @@ while True:
 	if a == '1':
 		Message = soma(int(b1), int(b2))
 		modifiedMessage = str(Message).encode('utf-8')
+		serverSocket.sendto(modifiedMessage, clientAddress)  
+	elif a == '2':
+		Message = raiz(int(b1))
+		print (Message)
+		modifiedMessage = str(Message).encode('utf-8')
 		serverSocket.sendto(modifiedMessage, clientAddress)
-
-
-
+	else:
+		print ("Mensagem Invalida")
